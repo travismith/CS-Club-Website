@@ -1,0 +1,427 @@
+/* Title */
+div.LogoDisplay
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+img.ContentLogo
+{
+	width: 5rem;
+	height: 5rem;
+}
+
+span.Title
+{
+	display: flex;
+	justify-content: center;
+
+	color: black;
+	font-size: 2rem;
+
+	text-decoration: underline;
+}
+
+/* Newsletter */
+img.NewsletterHeader
+{
+	width: 60%;
+	margin: auto;
+
+	border: 3px solid black;
+}
+
+div.SelectionContent h2.Newsletter
+{
+	text-decoration: underline;
+	text-align: center;
+}
+
+div.SelectionContent p
+{
+	font-size: 1rem;
+}
+
+div.SelectionContent p.Large
+{
+	font-size: 1.5rem;
+	text-align: center;
+}
+
+a.BodyLink
+{
+	color: blue;
+	font-size: 1rem;
+}
+
+/* Calendar */
+div.Calendar
+{
+	width: 100%;
+
+	color: white;
+	text-align: center;
+	border-radius: 25px;
+	background-color: rgb(200,0,0);
+	
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+div.CalendarControls
+{
+	color: white;
+	
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: row;
+
+	width: 50%;
+}
+
+span.MonthYearDisplay
+{
+	display: flex;
+	justify-content: center;
+
+	font-size: 1.75rem;
+	text-decoration: underline;
+}
+
+div.DividerButton
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	height: 3rem;
+}
+
+a.MonthMove
+{
+	border: 2px solid black;
+
+	
+	background-color: white;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	border-radius: 50%;
+}
+
+a.MonthMove img
+{
+	height: 2rem;
+	width: 2rem;
+
+	margin: 1rem;
+}
+
+table.CalendarFrame
+{
+	width: 100%;
+}
+
+th.DayLabel
+{
+	margin: 0;
+
+	border: 3px solid black;
+	background-color: grey;
+	color: white;
+}
+
+td
+{
+	border: 3px solid black;
+}
+
+td.White
+{
+	background-color: white;
+
+	text-align: center;
+}
+
+td.Grey
+{
+	background-color: grey;
+}
+
+td#Selected
+{
+	background-color: greenyellow;
+}
+
+a.CalendarButton
+{
+	display: block;
+
+	background-color: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+
+	color: black;
+}
+
+a.CalendarButton:hover
+{
+	text-decoration: none;
+
+	background-color: greenyellow;
+}
+
+div.CalendarDate
+{
+	display: flex;
+	flex-direction: column;
+
+	padding: 0;
+	margin: 0;
+}
+
+div.UpperHalf
+{
+	/*background-color: white;*/
+
+	border: 2px solid black;
+	padding: 0;
+	margin: 0;
+
+	font-size: 1.5rem;
+	padding: .25rem;
+}
+
+span.DayOfMonth#Today
+{
+	color: red;
+}
+
+div.LowerHalf
+{
+	border: 2px solid black;
+	margin-top: .25rem;
+
+	height: 6rem;
+
+	display: flex;
+	flex-direction: column;
+}
+
+div.CalendarDisplaySpace
+{
+	border: 2px solid black;
+	background-color: white;
+	
+	color: black;
+
+	display: flex;
+	flex-direction: column;
+}
+
+
+
+div.Events
+{
+	display: flex;
+	justify-content: center;
+}
+
+div.EventFrame
+{
+	width: 50%;
+	padding: 1rem;
+	margin: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+	border: 2px solid black;
+}
+
+div.EventFrame span
+{
+	text-align: left;
+}
+
+span.EventName
+{
+	font-size: 1.25rem;
+	text-decoration: underline;
+}
+
+/*
+.EventHeader
+{
+	
+}
+*/
+
+div.CalendarDisplaySpace#CreateEvent
+{
+	flex-direction: column;
+}
+
+span.DisplayHeader
+{
+	font-size: 1.5rem;
+	text-decoration: underline;
+
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+form.CreateEventForm
+{
+	width: 50%;
+}
+
+div.FormCenter
+{
+	display: flex;
+	flex-direction: column;
+}
+
+span.AlignLeft
+{
+	text-align: left;
+}
+
+div.InputList span.AlignLeft
+{
+	margin-bottom: 1rem;
+}
+
+div.FormCenter span.AlignLeft
+{
+	margin-bottom: 1rem;
+}
+
+div.FormCenter input[type="text"]
+{
+	width: 100%;
+}
+
+div.InputList input[type="text"]
+{
+	width: 75%;
+}
+
+span.AlignLeft input[type="checkbox"]
+{
+	width: 1rem;
+}
+
+div.InputList
+{
+	display: flex;
+	flex-direction: column;
+}
+
+form.CreateEventForm input
+{
+	width: 100%;
+}
+
+input, textarea
+{
+	border: 2px solid black;
+}
+
+select
+{
+	width: 100%;
+}
+
+form.CreateEventForm textarea
+{
+	width: 100%;
+	height: 5rem;
+	resize: none;
+}
+
+/* Profile Edit */
+div.EditProfileForm
+{
+	display: flex;
+	flex-direction: column;
+
+	width: 50%;
+	border: 2px solid black;
+	padding: 2rem;
+}
+
+img.DisplayPFP
+{
+	width: 7.5rem;
+	height: 7.5rem;
+
+	border: 2px solid black;
+}
+
+div.EditProfileForm form
+{
+	display: flex;
+	flex-direction: column; 
+}
+
+div.SubtitleOrg
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+span.FormSubtitle
+{
+	font-size: 1.5rem;
+	text-decoration: underline;
+}
+
+div.Column
+{
+	display: flex;
+	flex-direction: column;
+}
+
+/*
+div#PIEdit
+{
+	display: none;
+}
+*/
+
+span.DisplayBox
+{
+	border: 2px solid black;
+	background-color: grey;
+	color: white;
+}
+
+div#AI
+{
+	display: none;
+}
+
+input, select
+{
+	border: 2px solid black;
+}
+
+input.FileInput
+{
+	display: none;
+}
+
+input.FileButton
+{
+	width: 50%;
+}
+
+/* Other */
+img.UnderConstruction
+{
+	width: 50%;
+}

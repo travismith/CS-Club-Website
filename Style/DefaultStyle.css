@@ -1,0 +1,52 @@
+body
+{
+	margin: 0;
+}
+
+img.Logo
+{
+	width: 15rem;
+	height: 15rem;
+}
+
+span.InlineCenter
+{
+	display: flex;
+	justify-content: center;
+}
+
+div.Center
+{
+	display: flex;
+	justify-content: center;
+}
+
+div.VerticalCenter
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+span.InlineRight
+{
+	display: flex;
+	justify-content: right;
+
+	border: 2px solid right;
+}
+
+.Rotate90
+{
+	transform: rotate(90deg);
+}
+
+.Rotate180
+{
+	transform: rotate(180deg);
+}
+
+span.Warning
+{
+	color: red;
+}

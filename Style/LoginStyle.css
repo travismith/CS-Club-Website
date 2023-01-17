@@ -1,0 +1,37 @@
+body
+{
+	display: flex;
+	flex-direction: column;
+}
+
+div.Upper
+{
+	margin-top: 7rem;
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+div.Lower
+{
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+form
+{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	width: 20rem;
+
+}
+
+span.LoginInput
+{
+	width: 100%;
+}

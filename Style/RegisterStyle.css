@@ -1,0 +1,86 @@
+body
+{
+	display: flex;
+	justify-content: center;
+}
+
+span#Title
+{
+	font-size: 2rem;
+}
+
+input
+{
+	border: 2px solid black;
+}
+
+select
+{
+	border: 2px solid black;
+}
+
+p
+{
+	padding-left: 5rem;
+	padding-right: 5rem;
+	line-height: 1.5rem;
+}
+
+div.FormFrame
+{
+	background-color: white;
+	border-radius: 15px;
+
+	color: black;
+
+	width: 50%;
+	padding: 1rem;
+
+	margin: 2rem;
+
+	display: flex;
+	flex-direction: column;
+}
+
+div.FrameInfo
+{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+input.Short
+{
+	width: 2rem;
+}
+
+div.HorizontalForm
+{
+	display: flex;
+	justify-content: center;
+}
+
+div.VerticalForm
+{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+	width: 50%;
+}
+
+input.Submit
+{
+	width: 50%;
+}
+
+div.WarningBox
+{
+	width: 60%;
+
+	display: flex;
+	text-align: center;
+	flex-direction: column;
+	
+	padding: 1rem;
+}
