@@ -17,10 +17,10 @@ class CS_Database_Object
 	private $Database;
 
 	private $dbRegistrationUser = "RegistrationUser";
-	private $dbRegistrationPass = "D2T2B2S3P2SSW0RD!";
+	private $dbRegistrationPass = "Change this to the password of your RegistrationUser";
 
 	private $dbEventUser = "EventUser";
-	private $dbEventPass = "3V3NtP2SSW0RD!!122";
+	private $dbEventPass = "Change this to the password of your EventUser";
 
 	function __destruct()
 	{
