@@ -9,19 +9,17 @@ What I think I have right about my application securty:
 
 */
 
+
 class CS_Database_Object
 {
 	private $dbServer = "127.0.0.1";
-	private $dbName = "msucsclub";
+	private $dbName = "MSUCSClub";
 	private $dbPort = 3309;
 	private $dbSocket = "/var/run/mysqld/mysqld.sock";
 	private $Database;
 
 	private $dbRegistrationUser = "RegistrationUser";
-	private $dbRegistrationPass = "D2T2B2S3P2SSW0RD!";
-
 	private $dbEventUser = "EventUser";
-	private $dbEventPass = "3V3NtP2SSW0RD!!122";
 
 	function __destruct()
 	{
@@ -30,15 +28,16 @@ class CS_Database_Object
 
     private function ReturnDBConnection($User)
     {
+		include "C:\Users\Travis\Documents\DatabasePasswords.php";
 		$Pass = "";
 
 		if ($User == "RegistrationUser")
 		{
-			$Pass = $this->dbRegistrationPass;
+			$Pass = $dbRegistrationPass;
 		}
 		else if ($User == "EventUser")
 		{
-			$Pass = $this->dbEventPass;
+			$Pass = $dbEventPass;
 		}
 
 		if (strpos(php_uname(), 'Windows') !== false)
