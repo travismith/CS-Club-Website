@@ -61,7 +61,7 @@
 									}
 								?>
 
-								<img src="../Media/PFPs/<?=$CSClubID?>" onerror="this.src='../Media/PFPs/Default'" class="PFP">
+								<img src="<?=$ImageSrc?>" onerror="this.src='../Media/PFPs/Default'" class="PFP">
 							</span>
 							
 							<span class="Q">
