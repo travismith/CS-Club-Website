@@ -28,20 +28,20 @@ class CS_Database_Object
 
     private function ReturnDBConnection($User)
     {
-		include "C:\Users\Travis\Documents\DatabasePasswords.php";
-		$Pass = "";
-
-		if ($User == "RegistrationUser")
-		{
-			$Pass = $dbRegistrationPass;
-		}
-		else if ($User == "EventUser")
-		{
-			$Pass = $dbEventPass;
-		}
-
 		if (strpos(php_uname(), 'Windows') !== false)
 		{
+			include "C:\Users\Travis\Documents\DatabasePasswords.php";
+			$Pass = "";
+
+			if ($User == "RegistrationUser")
+			{
+				$Pass = $dbRegistrationPass;
+			}
+			else if ($User == "EventUser")
+			{
+				$Pass = $dbEventPass;
+			}
+			
 			// Connect to the MySql server using port number
 			$this->Database = new mysqli(
 				$this->dbServer,
@@ -53,6 +53,18 @@ class CS_Database_Object
 		}
 		else
 		{
+			include "/var/wwwResources/DatabasePasswords.php";
+			$Pass = "";
+
+			if ($User == "RegistrationUser")
+			{
+				$Pass = $dbRegistrationPass;
+			}
+			else if ($User == "EventUser")
+			{
+				$Pass = $dbEventPass;
+			}
+			
 			// Connect to the MySql server using socket
 			$this->Database = new mysqli(
 				$this->dbServer,
