@@ -16,7 +16,7 @@
 
 				$Selected = filter_input(INPUT_GET, "Selected");
 
-				$UserInfo = NULL;
+				$CSClubID = NULL;
 
 				$Authenticated = CheckAuthentication();
 				
@@ -25,18 +25,21 @@
 					$CSDatabase = new CS_Database_Object;
 					$CSClubID = $_SESSION["SessionID"];
 
-					$UserInfo = $CSDatabase->SelectUser($CSClubID, "FirstName, LastName, Major, Membership");
+					$UserInfo = $CSDatabase->SelectUser($CSClubID, "CSClubID", "Username, FirstName, LastName, Major, AccountType");
 				}
 				else
 				{
+					echo "User not authenticated, logging out...";
+					
 					Header('Location: ../Objects/Logout.php');
 					exit();
 				}
 
-				$FirstName = $UserInfo[0];
-				$LastName = $UserInfo[1];
-				$Major = $UserInfo[2];
-				$Membership = $UserInfo[3];
+				$Username = $UserInfo[0];
+				$FirstName = $UserInfo[1];
+				$LastName = $UserInfo[2];
+				$Major = $UserInfo[3];
+				$AccountType = $UserInfo[4];
 			?>
 
 			<!-- MENU -->
@@ -64,20 +67,22 @@
 							<span class="Q">
 								<button onClick="" class="Notifications">
 									<img class="Notifications" src="../Media/Notifications.png">
-
-									
 								</button>
 							</span>
 						</div>
 
 						<br>
-						<span><?="$FirstName $LastName"?></span>
+						<span><?=$Username?></span>
+						<!--
+							<span><?=$FirstName . " " . $LastName?></span>
+						-->
 						<span class="Major"><?=$Major?></span>
 					</div>
 			
 					<hr>
 					<br>
 					<script>
+						var GamesOpen = false;
 						var ClubOpen = false;
 						var LearningOpen = false;
 						var ProjectsOpen = false;
@@ -89,7 +94,24 @@
 							const sectionDisplay = document.getElementById(Section + "Frame");
 							const sectionButton = document.getElementById(Section + "Button");
 
-							if (Section == "Club")
+							if (Section == "Games")
+							{
+								if (GamesOpen)
+								{
+									GamesOpen = false;
+
+									sectionDisplay.style.display = "none";
+									sectionButton.style.transform = "rotate(0deg)";
+								}
+								else
+								{
+									GamesOpen = true;
+
+									sectionDisplay.style.display = "flex";
+									sectionButton.style.transform = "rotate(90deg)";
+								}
+							}
+							else if (Section == "Club")
 							{
 								if (ClubOpen)
 								{
@@ -178,6 +200,51 @@
 
 					<div class="MenuSection">
 						<span class="MenuLabel">
+							Games
+							
+							<button id="GamesButton" onClick="ToggleMenuSection('Games')" class="SectionMover">
+								<img class="Dropdown" src="../Media/Dropdown.png" />
+							</button>
+						</span>
+
+						<hr>
+
+						<div id="GamesFrame" class="MenuSectionContent">
+							<a
+								<?php 
+									if ($Selected == "CyberSecurity")
+									{
+										echo "style='text-decoration: underline;'";
+									}
+								?>
+
+								id="CyberSecurity"
+								href="?Selected=CyberSecurity"
+							>
+								Cyber Security
+							</a>
+
+
+							<a
+								<?php 
+									if ($Selected == "BrowserGames")
+									{
+										echo "style='text-decoration: underline;'";
+									}
+								?>
+
+								id="BrowserGames"
+								href="?Selected=BrowserGames"
+							>
+								Javascript Browser Games
+							</a>
+						</div>
+					</div>
+
+					<br>
+
+					<div class="MenuSection">
+						<span class="MenuLabel">
 							Club
 							
 							<button id="ClubButton" onClick="ToggleMenuSection('Club')" class="SectionMover">
@@ -255,7 +322,7 @@
 					</div>
 					
 					<?php
-						if ($Membership > 50)
+						if ($AccountType > 50)
 						{	
 					?>		<br>
 
@@ -281,7 +348,11 @@
 
 					<script>
 						<?php
-							if ($Selected == NULL || $Selected == "Newsletter" || $Selected == "Calendar" || $Selected == "Members" || $Selected == "Documents")
+							if ($Selected == "CyberSecurity" || $Selected == "BrowserGames")
+							{
+								echo "ToggleMenuSection('Games')";
+							}
+							else if ($Selected == NULL || $Selected == "Newsletter" || $Selected == "Calendar" || $Selected == "Members" || $Selected == "Documents")
 							{
 								
 								echo "ToggleMenuSection('Club');";

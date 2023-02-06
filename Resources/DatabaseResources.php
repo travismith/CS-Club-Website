@@ -14,6 +14,7 @@ class CS_Database_Object
 	private $dbServer = "127.0.0.1";
 	private $dbName = "msucsclub";
 	private $dbPort = 3309;
+	private $dbSocket = "/var/run/mysqld/mysqld.sock";
 	private $Database;
 
 	private $dbRegistrationUser = "RegistrationUser";
@@ -40,13 +41,27 @@ class CS_Database_Object
 			$Pass = $this->dbEventPass;
 		}
 
-		$this->Database = new mysqli(
-			$this->dbServer,
-			$User,
-			$Pass,
-			$this->dbName,
-			$this->dbPort
-		);
+		if (strpos(php_uname(), 'Windows') !== false)
+		{
+			// Connect to the MySql server using port number
+			$this->Database = new mysqli(
+				$this->dbServer,
+				$User,
+				$Pass,
+				$this->dbName,
+				$this->dbPort
+			);
+		}
+		else
+		{
+			// Connect to the MySql server using socket
+			$this->Database = new mysqli(
+				$this->dbServer,
+				$User,
+				$Pass,
+				$this->dbName
+			);
+		}
 
         return $this->Database;
     }
@@ -57,7 +72,6 @@ class CS_Database_Object
 
 		$SQLQueryDate = "$Year-$Month-$Day";
 		
-
 		if ($DisplayType == "Large")
 		{
 			$SQL = "SELECT `Name`, `Location`, `Description`, RecurringCode, StartDate, EndDate, StartTime, Start_AM_PM, EndTime, End_AM_PM ";
@@ -136,7 +150,7 @@ class CS_Database_Object
 	function ReturnCSClubID($LoginID)
 	{
 		$Database = $this->ReturnDBConnection("RegistrationUser");
-		$SQL = "SELECT CSClubID FROM People WHERE People.StudentID =  '$LoginID' OR People.EMail = '$LoginID';";
+		$SQL = "SELECT CSClubID FROM People WHERE People.Username =  '$LoginID' OR People.EMail = '$LoginID';";
 		
 		$Database->real_escape_string($SQL);
 		$Table = $Database->query($SQL);
@@ -160,7 +174,7 @@ class CS_Database_Object
 	function GetPasswordHash($CSClubID)
 	{
 		$Database = $this->ReturnDBConnection("RegistrationUser");
-		$SQL = "SELECT PasswordHash FROM People WHERE People.CSClubID = $CSClubID;";
+		$SQL = "SELECT PasswordHash FROM People WHERE People.CSClubID = '$CSClubID';";
 
 		$Database->real_escape_string($SQL);
 		$Table = $Database->query($SQL);
@@ -184,8 +198,9 @@ class CS_Database_Object
 		// 1 - Success
 		// 2 - Incorrect password
 		// 3 - User does not exist
+
 		$Database = $this->ReturnDBConnection("RegistrationUser");
-		$SQL = "SELECT PasswordHash, CSClubID FROM People WHERE People.StudentID =  '$LoginID' OR People.EMail = '$LoginID';";
+		$SQL = "SELECT PasswordHash, CSClubID FROM People WHERE People.Username =  '$LoginID' OR People.EMail = '$LoginID';";
 		
 		$Database->real_escape_string($SQL);
 		$Table = $Database->query($SQL);
@@ -200,8 +215,9 @@ class CS_Database_Object
 
 				if (password_verify($PasswordAttempt, $PassHash))
 				{
-					AuthenticateSession($C8SClubID, $PasswordAttempt); // Start session here
 
+					AuthenticateSession($CSClubID, $PasswordAttempt); // Start session here
+				
 					return 1;
 				}
 				else
@@ -221,10 +237,10 @@ class CS_Database_Object
 		}
 	}
 
-	function CheckUserExists($Email, $Phone, $StudentID)
+	function CheckUserExists($Email, $Phone)
 	{
 		$Database = $this->ReturnDBConnection("RegistrationUser");
-		$SQL = "SELECT CSClubID, FirstName, LastName FROM `People` WHERE People.EMail = '$Email' OR People.Phone = '$Phone' or People.StudentID = '$StudentID';";
+		$SQL = "SELECT CSClubID, Username FROM `People` WHERE People.EMail = '$Email' OR People.Phone = '$Phone';";
 
 		$Database->real_escape_string($SQL);
 		$Result = $Database->query($SQL);
@@ -235,7 +251,7 @@ class CS_Database_Object
 			{
 				$User = $Result->fetch_row();
 
-				echo "User: $User[1] $User[2] already exists. If you are seeing this, there was an error redirecting back to the reigstration form view. <br>";
+				echo "User: $User[1] already exists. If you are seeing this, there was an error redirecting back to the reigstration form view. <br>";
 				echo "CS Club ID: $User[0]";
 
 				return true;
@@ -254,60 +270,14 @@ class CS_Database_Object
 		}
 	}
 
-	function RegisterUser($FN, $LN, $StudentID, $Email, $Phone, $DOB, $JoinedClub, $StudentAthlete, $Sport, $CurrentGrade, $ExpectedGrad, $Major, $Pass1, $ThreeDPrinting, $Robotics, $VideoGameDev, $AI, $MobileAppDev, $WebDev, $OtherInterest)
+	function RegisterUser($Username, $Email, $FirstName, $LastName, $Password, $JoinedOn)
 	{
 		$Database = $this->ReturnDBConnection("RegistrationUser");
 
-		$CheckUserExists = "SELECT * FROM `People` WHERE People.EMail = $Email OR People.Phone = $Phone or People.StudentID = $StudentID;";
-		$SQL = "INSERT INTO `People` VALUES (
-		NULL, 
-		20,
-		'$FN',
-		'$LN',
-		$StudentID,
-		'$Email',
-		'$Phone',
-		'$DOB',
-		'$JoinedClub',
-		$StudentAthlete,
-		";
-	
-		if ($StudentAthlete)
-		{
-			$SQL = $SQL . "'$Sport', ";
-		}
-		else
-		{
-			$SQL = $SQL . "NULL, ";
-		}
-	
-		$SQL = $SQL . 
-		"
-		$CurrentGrade,
-		$ExpectedGrad,
-		'$Major', ";
-		
-		$PasswordHash = password_hash($Pass1, PASSWORD_DEFAULT);
-	
-		$SQL = $SQL .
-		"
-		$ThreeDPrinting, 
-		$Robotics, 
-		$VideoGameDev, 
-		$AI, 
-		$MobileAppDev, 
-		$WebDev, ";
+		$PasswordHash = password_hash($Password, PASSWORD_DEFAULT);
 
-		if ($OtherInterest != "")
-		{
-			$SQL = $SQL . "'$OtherInterest', ";
-		}
-		else
-		{
-			$SQL = $SQL . "NULL, ";
-		}
-
-		$SQL = $SQL . "'$PasswordHash');";
+		$SQL = "INSERT INTO `People` (Username, EMail, FirstName, LastName, CSClubID, AccountType, PasswordHash, JoinedOn) VALUES
+		('$Username', '$Email', '$FirstName', '$LastName', NULL, 20, '$PasswordHash', '$JoinedOn');";
 
 		echo $SQL . "<br><br>";
 
@@ -326,12 +296,61 @@ class CS_Database_Object
 		}
 	}
 
-	function SelectUser($CSClubID, $SelectionSQL)
+	function UpdateUser($CSClubID, $Phone, $Birthday, $Athlete, $Sport, $Semester, $Major)
+	{
+		$Database = $this->ReturnDBConnection("RegistrationUser");
+
+		$SQL = "
+		UPDATE People
+		SET Phone = '$Phone', ";
+		
+		if ($Birthday == "NULL")
+		{
+			$SQL = $SQL . "Birthday = $Birthday, ";
+		}
+		else
+		{
+			$SQL = $SQL . "Birthday = '$Birthday', ";
+		}
+		
+		$SQL = $SQL . "StudentAthlete = $Athlete, Sport = '$Sport', Semester = $Semester, Major = '$Major'
+		WHERE CSClubID = $CSClubID;";
+
+		echo "<br><br>";
+		echo "SQL: " . $SQL;
+
+		echo "<br>";
+
+		$Result = $Database->query($SQL);
+
+		if ($Result)
+		{
+			return $Result;
+		}
+		else
+		{
+			echo "SQL Error: " . $Database->error;
+			//exit();
+			return false;
+		}
+	}
+
+	function SelectUser($ID, $ID_Type, $SelectionSQL)
 	{
 		// Error codes
 		// -1 No result
+
 		$Database = $this->ReturnDBConnection("RegistrationUser");
-		$SelectionSQL = "SELECT $SelectionSQL FROM `People` WHERE `People`.CSClubID = $CSClubID;";
+		
+		if ($ID_Type == "Username")
+		{
+			$SelectionSQL = "SELECT $SelectionSQL FROM `People` WHERE People.Username = '$ID';";
+		}
+		else if ($ID_Type == "CSClubID")
+		{
+			$SelectionSQL = "SELECT $SelectionSQL FROM `People` WHERE People.CSClubID = '$ID';";
+		}
+
 		$Table = $Database->query($SelectionSQL);
 		
 		if ($Table)
@@ -343,6 +362,7 @@ class CS_Database_Object
 			}
 			else
 			{
+				echo "An error has occured.";
 				return -1;
 			}
 		}
@@ -353,6 +373,3 @@ class CS_Database_Object
 		}
 	}
 }
-
-
-?>

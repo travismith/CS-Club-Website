@@ -3,9 +3,52 @@ CREATE DATABASE MSUCSClub;
 CREATE TABLE `Project`
 {
 	DirectorClubID int NOT NULL,
+
+	
 }
 
 CREATE TABLE `People`
+(
+	Username varchar(30) NOT NULL,
+	EMail varchar(50) NOT NULL,
+	
+	FirstName varchar(30) NOT NULL,
+	LastName varchar(30) NOT NULL,
+
+	CSClubID int NOT NULL AUTO_INCREMENT,
+	AccountType int NOT NULL,
+
+	/*
+		Account Type
+		0 - Guest
+		10 - Guest Account
+		20 - User
+		30 - Tutor
+		40 - Officer
+		50 - Advisor
+		60 - IT
+		70 - President
+	*/
+
+	
+	PasswordHash varchar(255) NOT NULL,
+	JoinedOn datetime NOT NULL,
+
+	PRIMARY KEY (CSClubID),
+
+	/* Optional */
+
+	Phone varchar(15),
+	Birthday date,
+
+	StudentAthlete BOOL,
+	Sport varchar(50),
+	Semester int,
+
+	Major varchar(100)
+);
+
+CREATE TABLE `OldPeople`
 (
 	CSClubID int NOT NULL AUTO_INCREMENT,
 
@@ -37,9 +80,7 @@ CREATE TABLE `People`
 	StudentAthlete BOOL NOT NULL,
 	Sport varchar(50),
 
-	Grade int NOT NULL, /* May require a script to increment this every school year */
-	ExpectedGrad varchar(5) NOT NULL,
-
+	SemestersInSchool int NOT NULL,
 	Major varchar(100) NOT NULL,
 	
 	/* Optional */

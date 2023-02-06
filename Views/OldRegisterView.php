@@ -13,9 +13,7 @@
 				<br>
 				<span class="InlineCenter" id="Title">Minot State</span>
 				<p>
-					<span class="InlineCenter">
-						<img class="Logo" src="../Media/2022 Logo.png">
-					</span>
+					<span class="InlineCenter"><img class="Logo" src="../Media/2022 Logo.png"></span>
 				</p>
 				
 				<!--
@@ -26,7 +24,6 @@
 			</div>
 
 			<?php
-			/*
 				// Session prepare
 				include '../Resources/SessionResources.php';
 
@@ -58,29 +55,10 @@
 
 					ClearFormFillSessions();
 				}
-			*/
 			?>
-			
 			<form action="../Objects/Register.php" method="POST">
 				<div class="HorizontalForm">
 					<div class="VerticalForm">
-						Username
-						<input type="text" name="Username" value="" required>
-						<br>
-
-						MSU Email
-						<input type="text" name="Email" value="" required>
-						<br>
-
-						First Name
-						<input type="text" name="FirstName" value="" required>
-						<br>
-
-						Last Name
-						<input type="text" name="LastName" value="" required>
-						<br>
-
-						<!--
 						First Name:
 						<input type="text" name="FirstName" value="<?=$FN?>" required>
 						<br>
@@ -159,7 +137,7 @@
 							<option value="2026">2026</option>
 							<option value="2027+">2027+</option>
 						</select>
-						
+						<!--<input class="Short" type="number" name="ExpectedGrade" value=<?=$ExpectedGrad?> required>-->
 						<br>
 						
 						Major(s)
@@ -221,8 +199,7 @@
 
 							//optionalRadioInput.value = false;
 
-							optionalRadioInput.addEventListener('click', function()
-							{
+							optionalRadioInput.addEventListener('click', function() {
 								if (this.checked)
 								{
 									optionalSelectBox.style.display = 'block';
@@ -235,7 +212,7 @@
 								}
 							});
 						</script>
-						-->
+
 						<span class="InlineCenter">-- Password --</span>
 
 						Enter a Password

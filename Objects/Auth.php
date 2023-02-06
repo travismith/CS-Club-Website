@@ -12,11 +12,13 @@
 	$Authenticated = $CSDatabase->AuthenticateUser($LoginID, $PasswordAttempt);
 	
 	echo "<br> Auth result: $Authenticated <br>";
+	
 	if ($Authenticated == 1)
 	{
 		// Success!
 		echo "Authentication Success! <br><br>";
 		Header('Location: ../Views/Home.php');
+
 		exit();
 	}
 	else if ($Authenticated == 2)

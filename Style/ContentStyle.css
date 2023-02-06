@@ -396,6 +396,7 @@ div#PIEdit
 span.DisplayBox
 {
 	border: 2px solid black;
+	min-height: 1.1rem;
 	background-color: grey;
 	color: white;
 }

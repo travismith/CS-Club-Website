@@ -44,18 +44,23 @@
 			</p>
 <?php	}
 
-		function CalendarDay($MainMonth, $PrintDay, $PrintMonth, $PrintYear)
-		{?>
-			<?php
-				// Get the current month and year
-				$month = filter_input(INPUT_GET, "Month");
-				$day = filter_input(INPUT_GET, "Day");
-				$year = filter_input(INPUT_GET, "Year");
-				
-				//echo $month . " " . $day . " " . $year;
-			?>
+		function ClubMembers()
+		{
+			$CSDatabase = new CS_Database_Object;
 
-			<td
+			$MemberArray = $CSDatabase->ClubRoster();
+		}
+
+		function CalendarDay($MainMonth, $PrintDay, $PrintMonth, $PrintYear)
+		{
+			// Get the current month and year
+			$month = filter_input(INPUT_GET, "Month");
+			$day = filter_input(INPUT_GET, "Day");
+			$year = filter_input(INPUT_GET, "Year");
+			
+			//echo $month . " " . $day . " " . $year;
+
+?>			<td
 				<?php
 					if (!$MainMonth)
 					{
@@ -600,215 +605,191 @@
 		{
 			ContentTitle("Edit Profile");
 			
-			$UserInfo = $CSDatabase->SelectUser($CSClubID, "Phone, Birthday, Major, ExpectedGrad, StudentAthlete, Sport, CSClubID");
+			$UserInfo = $CSDatabase->SelectUser($CSClubID, "CSClubID", "Phone, Birthday, StudentAthlete, Sport, Semester, Major");
 			
 			// Personal Info
 			$Phone = $UserInfo[0];
 			$Birthday = $UserInfo[1];
-			$Major = $UserInfo[2];
-			$ExpectedGrad = $UserInfo[3];
-			$StudentAthlete = $UserInfo[4];
-			$Sport = $UserInfo[5];
+			$StudentAthlete = $UserInfo[2];
+			$Sport = $UserInfo[3];
+			$Semester = $UserInfo[4];
+			$Major = $UserInfo[5];
 
-			$CSClubID = $UserInfo[6];
+			if ($Sport == "NULL")
+			{
+				$Sport = "";
+			}
+
+			if ($Semester == "NULL")
+			{
+				$Semester = "";
+			}
+
+			if ($Major == "NULL")
+			{
+				$Major = "";
+			}
+
+			if ($Birthday == "NULL")
+			{
+				$Birthday = "";
+			}
 
 ?>			<div class="Center">
 				<div class="EditProfileForm">
 					<div class="SubtitleOrg">
-							<span class="FormSubtitle">Personal Information</span>
-							<button id="EditButton" onClick="editButton()">Edit</button>
-						</div>
+						<span class="FormSubtitle">Update Information</span>
+					</div>
 
-						<br>
+					<br>
 
-						<div id="PIDisplay" class="Column">
+					<div id="PIEdit" class="Column">
+						<form action="../Objects/Update.php" method="POST">
 							Phone Number
-							<span class="DisplayBox"><?=$Phone?></span>
+							<input type="tel" name="Phone" value="<?=$Phone?>">
 							<br>
 
 							Birthday
-							<span class="DisplayBox"><?=$Birthday?></span>
+							<input type="date" name="Birthday" value="<?=$Birthday?>">
 							<br>
 
-							Expected Graduation
-							<span class="DisplayBox"><?=$ExpectedGrad?></span>
-							<br>
-
-							Athlete
-							<span class="DisplayBox">
-								<?php
-									if ($StudentAthlete)
-									{
-										echo "Yes";
-									}
-									else
-									{
-										echo "No";
-									}
-								?>
+							<span>
+								<input type="checkbox" class="Athlete" name="Athlete" <?php if ($StudentAthlete) { echo "checked"; }?>>
+								Student Athlete
 							</span>
 							<br>
 
-							<?php
-									if ($StudentAthlete)
-									{?>
-										Sport
-										<span class="DisplayBox"><?=$Sport?></span>
-							<?php	}?>
+							<span id="SportHide" <?php if (!$StudentAthlete) {?> style="display:none;" <?php } ?>>Sport</span>
+							<select name="Sport" class="Sport" <?php if (!$StudentAthlete) {?> style="display: none" <?php } ?>>
+								<option disabled selected>Pick your sport</option>
+								<option <?php if ($Sport == "Golf") { echo "selected"; } ?> value="Golf">Golf</option>
+								<option <?php if ($Sport == "Football") { echo "selected"; } ?> value="Football">Football</option>
+								<option <?php if ($Sport == "Basketball") { echo "selected"; } ?> value="Basketball">Basketball</option>
+								<option <?php if ($Sport == "Wrestling") { echo "selected"; } ?> value="Wrestling">Wrestling</option>
+								<option <?php if ($Sport == "Baseball") { echo "selected"; } ?> value="Baseball">Baseball</option>
+								<option <?php if ($Sport == "TrackCX") { echo "selected"; } ?> value="TrackCX">Track / Cross Country</option>
+								<option <?php if ($Sport == "Hockey") { echo "selected"; } ?> value="Hockey">Hockey</option>
+								<option <?php if ($Sport == "Hockey") { echo "selected"; } ?> value="Hockey">Soccer</option>
+								<option <?php if ($Sport == "Hockey") { echo "selected"; } ?> value="Hockey">Volleyball</option>							
+							</select>
+							<br class="SportHide" <?php if (!$StudentAthlete) { ?> style="display:none;" <?php } ?>>
+
+							<script>
+								// Get the radio input and select box
+								const radioInput = document.querySelector('input.Athlete');
+								const selectBox = document.querySelector('select.Sport');
+								const selectLabel = document.querySelector('span#SportHide');
+								const lineBreak = document.querySelector('br.SportHide');
+
+								radioInput.addEventListener('click', function() {
+									if (this.checked)
+									{
+										selectBox.style.display = 'block';
+										selectBox.required = true;
+										selectLabel.style.display = 'inline';
+										lineBreak.style.display = 'block';
+									}
+									else
+									{
+										selectBox.style.display = 'none';
+										selectBox.required = false;
+										selectLabel.style.display = 'none';
+										lineBreak.style.display = 'none';
+									}
+								});
+							</script>
+
+							Semester in College
+							<input type="text" name="Semester" value="<?=$Semester?>">
+
 							<br>
 
 							Major
-							<span class="DisplayBox"><?=$Major?></span>
 							<br>
+							<input type="text" name="Major" value="<?=$Major?>">
+
+							<br>
+
+							<input type="submit">
+						</form>
+
+						<br><br>
+
+						<div class="SubtitleOrg">
+							<span class="FormSubtitle">Update Profile Picture</span>
 						</div>
 						
-						<div id="PIEdit" class="Column" style="display: none">
-							<form action="../Objects/Update.php" method="POST">
-								Phone Number
-								<input type="tel" name="Phone" value="<?=$Phone?>" required>
-								<br>
+						<br>
 
-								Birthday
-								<input type="date" name="Birthday" value="<?=$Birthday?>" required>
-								<br>
+						<img src="../Media/PFPs/<?=$CSClubID?>" onerror="this.src='../Media/PFPs/Default'" class="DisplayPFP" id="DisplayPFP">
+						<br>
+						<input type="button" class="FileButton" onclick="document.getElementById('FileInput').click()" value="Upload a new profile picture">
 
-								Expected graduation
-								<select name="ExpectedGrade">
-									<option <?php if ($ExpectedGrad == "2022") { echo "selected"; } ?> value="2022">2022</option>
-									<option <?php if ($ExpectedGrad == "2023") { echo "selected"; } ?> value="2023">2023</option>
-									<option <?php if ($ExpectedGrad == "2024") { echo "selected"; } ?> value="2024">2024</option>
-									<option <?php if ($ExpectedGrad == "2025") { echo "selected"; } ?> value="2025">2025</option>
-									<option <?php if ($ExpectedGrad == "2026") { echo "selected"; } ?> value="2026">2026</option>
-									<option <?php if ($ExpectedGrad == "2027+") { echo "selected"; } ?> value="2027+">2027+</option>
-								</select>
-								<br>
-
-								<span>
-									<input type="checkbox" class="Athlete" name="Athlete" <?php if ($StudentAthlete) { echo "checked"; }?>>
-									Student Athlete
-								</span>
-								<br>
-
-								<select name="Sport" class="Sport" style="display: none">
-									<option disabled selected>Pick your sport</option>
-									<option <?php if ($Sport == "Golf") { echo "selected"; } ?> value="Golf">Golf</option>
-									<option <?php if ($Sport == "Football") { echo "selected"; } ?> value="Football">Football</option>
-									<option <?php if ($Sport == "Basketball") { echo "selected"; } ?> value="Basketball">Basketball</option>
-									<option <?php if ($Sport == "Wrestling") { echo "selected"; } ?> value="Wrestling">Wrestling</option>
-									<option <?php if ($Sport == "Baseball") { echo "selected"; } ?> value="Baseball">Baseball</option>
-									<option <?php if ($Sport == "TrackCX") { echo "selected"; } ?> value="TrackCX">Track / Cross Country</option>
-									<option <?php if ($Sport == "Hockey") { echo "selected"; } ?> value="Hockey">Hockey</option>
-									<option <?php if ($Sport == "Hockey") { echo "selected"; } ?> value="Hockey">Soccer</option>
-									<option <?php if ($Sport == "Hockey") { echo "selected"; } ?> value="Hockey">Volleyball</option>							
-								</select>
-
-								<br class="SportHide" style="display:none;">
-
-								<script>
-									// Get the radio input and select box
-									const radioInput = document.querySelector('input.Athlete');
-									const selectBox = document.querySelector('select.Sport');
-									const lineBreak = document.querySelector('br.SportHide');
-
-									radioInput.addEventListener('click', function() {
-										if (this.checked)
-										{
-											selectBox.style.display = 'block';
-											lineBreak.style.display = 'block';
-										}
-										else
-										{
-											selectBox.style.display = 'none';
-											lineBreak.style.display = 'none';
-										}
-									});
-								</script>
-
-								Major
-								<br>
-								<input type="Major" name="Major" value="<?=$Major?>" required>
-
-								<br>
-
-								<input type="submit">
-							</form>
-						</div>
+						<form enctype="multipart/form-data" action="../Objects/SavePFP.php" method="POST">
+							<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
+							<input type="file" id="FileInput" accept="image/png" class="FileInput" Name="PFPFile">
+							<input type="submit" id="FileSubmit" style="display: none;">
+						</form>
 
 						<script>
-							var Editing = false;
-							
-							var PIDisplay = document.getElementById("PIDisplay");
-							var PIEdit = document.getElementById("PIEdit");
-							var EditButton = document.getElementById("EditButton");
-
-							function editButton()
+							document.getElementById('FileInput').onchange = function (evt)
 							{
-								if (Editing)
+								var tgt = evt.target || window.event.srcElement,
+									files = tgt.files;
+								
+								// FileReader support
+								if (FileReader && files && files.length)
 								{
-									Editing = false;
-									
-									PIDisplay.style.display = "flex";
-									PIEdit.style.display = "none";
-									
-									EditButton.innerHTML = "Edit"
+									var fr = new FileReader();
+									fr.onload = function()
+									{
+										document.getElementById("DisplayPFP").src = fr.result;
+
+										document.getElementById("FileSubmit").click();
+									}
+
+									fr.readAsDataURL(files[0]);
 								}
-								else
+								else // Not supported
 								{
-									Editing = true;
-									
-									PIDisplay.style.display = "none";
-									PIEdit.style.display = "flex";
-									
-									EditButton.innerHTML = "Stop Editing"
+									console.log("Some issue");
+									// fallback -- perhaps submit the input to an iframe and temporarily store
+									// them on the server until the user's session ends.
 								}
 							}
 						</script>
-						<br>
+					</div>
 
-						<span class="FormSubtitle">Account Information</span>
-						<br>
+					<script>
+						var Editing = false;
+						
+						var PIDisplay = document.getElementById("PIDisplay");
+						var PIEdit = document.getElementById("PIEdit");
+						var editButton = document.getElementById("EditButton");
 
-						<div id="AIDisplay" class="Column">
-							Profile Picture
-							<img src="../Media/PFPs/<?=$CSClubID?>" onerror="this.src='../Media/PFPs/Default'" class="DisplayPFP" id="DisplayPFP">
-							<br>
-							<input type="button" class="FileButton" onclick="document.getElementById('FileInput').click()" value="Upload a new profile picture">
-
-							<form enctype="multipart/form-data" action="../Objects/SavePFP.php" method="POST">
-								<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-								<input type="file" id="FileInput" accept="image/png" class="FileInput" Name="PFPFile">
-								<input type="submit" id="FileSubmit" style="display: none;">
-							</form>
-							
-							<script>
-								document.getElementById('FileInput').onchange = function (evt)
-								{
-									var tgt = evt.target || window.event.srcElement,
-										files = tgt.files;
-									
-									// FileReader support
-									if (FileReader && files && files.length)
-									{
-										var fr = new FileReader();
-										fr.onload = function()
-										{
-											document.getElementById("DisplayPFP").src = fr.result;
-
-											document.getElementById("FileSubmit").click();
-										}
-										fr.readAsDataURL(files[0]);
-									}
-									
-									// Not supported
-									else {
-										console.log("Some issue");
-										// fallback -- perhaps submit the input to an iframe and temporarily store
-										// them on the server until the user's session ends.
-									}
-								}
-							</script>
-							<br>
-						</div>
+						function EditButton()
+						{
+							console.log("Clicked!");
+							if (Editing)
+							{
+								Editing = false;
+								
+								PIDisplay.style.display = "flex";
+								PIEdit.style.display = "none";
+								
+								editButton.innerHTML = "Edit"
+							}
+							else
+							{
+								Editing = true;
+								
+								PIDisplay.style.display = "none";
+								PIEdit.style.display = "flex";
+								
+								editButton.innerHTML = "Stop Editing"
+							}
+						}
+					</script>
 					<br>
 				</div>
 			</div>

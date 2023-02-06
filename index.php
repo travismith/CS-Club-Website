@@ -38,7 +38,7 @@
 
 			<span class="InlineCenter">
 				<form action="Objects/Auth.php" method="POST">
-					MSU Email or Student ID
+					Username | Email
 					<input type="text" name="LoginID">
 					<br>
 
