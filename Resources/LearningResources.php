@@ -26,7 +26,7 @@
 ?>			<span class="DevTitle">Learn new Languages</span>
 			
 			<div class="TileWrapper">
-				<a href="?Selected=Learn&Language=CPP" class="TopicTile Orbitron">
+				<div href="?Selected=Learn&Language=CPP" class="TopicTile Orbitron">
 					<span class="InlineCenter">Programming</span>
 
 					<div class="TileBody">
@@ -47,17 +47,29 @@
 							<span class="InlineCenter">Functions / Procedures</span>
 						-->
 					</div>
-				</a>
+				</div>
 
-				<a href="?Selected=Learn&Language=CPP" class="TopicTile Orbitron">
-					<span class="InlineCenter">C++</span>
+				<div href="?Selected=Learn&Language=CPP" class="TopicTile Orbitron">
+					<span class="InlineCenter">Other Languages</span>
 
 					<div class="TileBody">
-						<span class="InlineCenter">Other Languages</span>
-
 						<span>HTML</span>
 						<span>CSS</span>
 						
+					</div>
+				</div>
+			</div>
+
+			<span class="DevTitle">Learn Developer Skills</span>
+			
+			<div class="TileWrapper">
+				<a href="?Selected=Learn&Topic=Github" class="TopicTile Orbitron">
+					<span class="InlineCenter">Github</span>
+
+					<div class="TileBody">
+						<span class="InlineCenter">Git</span>
+						<span class="InlineCenter">Github Desktop</span>
+						<span class="InlineCenter">Command line</span>
 					</div>
 				</a>
 			</div>
@@ -65,7 +77,7 @@
 			<span class="DevTitle">Learn Web Application Stacks</span>
 			
 			<div class="TileWrapper">
-				<a href="?Selected=Learn&Stack=LAMP" class="TopicTile Orbitron">
+				<a href="?Selected=Learn&Topic=LAMP" class="TopicTile Orbitron">
 					<span class="InlineCenter">LAMP Stack</span>
 
 					<div class="TileBody">
