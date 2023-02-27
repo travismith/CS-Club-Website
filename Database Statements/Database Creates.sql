@@ -3,8 +3,13 @@ CREATE DATABASE MSUCSClub;
 CREATE TABLE `Project`
 {
 	DirectorClubID int NOT NULL,
+}
 
-	
+CREATE TABLE CSTopic
+{
+	TopicName varchar(50) NOT NULL,
+	DirectorID int NOT NULL,
+	FOREIGN KEY (DirectorID) REFERENCES People (CSClubID),
 }
 
 CREATE TABLE `People`
@@ -26,7 +31,7 @@ CREATE TABLE `People`
 		30 - Tutor
 		40 - Officer
 		50 - Advisor
-		60 - IT
+		60 - Developer
 		70 - President
 	*/
 
@@ -46,49 +51,6 @@ CREATE TABLE `People`
 	Semester int,
 
 	Major varchar(100)
-);
-
-CREATE TABLE `OldPeople`
-(
-	CSClubID int NOT NULL AUTO_INCREMENT,
-
-	/*
-		Membership
-		0 - Guest
-		10 - Guest Account
-		20 - User
-		30 - Tutor
-		40 - Officer
-		50 - Advisor
-		60 - IT
-		70 - President
-	*/
-
-	Membership int NOT NULL,
-
-	FirstName varchar(30) NOT NULL,
-	LastName varchar(30) NOT NULL,
-	
-	StudentID varchar(10) NOT NULL,
-	
-	EMail varchar(50) NOT NULL,
-	Phone varchar(15) NOT NULL,
-
-	Birthday date NOT NULL,
-	JoinedOn datetime NOT NULL,
-
-	StudentAthlete BOOL NOT NULL,
-	Sport varchar(50),
-
-	SemestersInSchool int NOT NULL,
-	Major varchar(100) NOT NULL,
-	
-	/* Optional */
-	
-
-	PasswordHash varchar(255) NOT NULL,
-
-	PRIMARY KEY (CSClubID)
 );
 
 CREATE TABLE `Events`

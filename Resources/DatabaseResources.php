@@ -23,7 +23,10 @@ class CS_Database_Object
 
 	function __destruct()
 	{
-		mysqli_close($this->Database);
+		if ($this->Database)
+		{
+			mysqli_close($this->Database);
+		}
 	}
 
     private function ReturnDBConnection($User)
@@ -76,6 +79,46 @@ class CS_Database_Object
 
         return $this->Database;
     }
+
+	function ClubRoster()
+	{
+		$Database = $this->ReturnDBConnection("RegistrationUser");
+
+		$SQL = "SELECT Username, CSClubID, Major, FirstName, LastName FROM People;";
+
+		$MembersList = $Database->query($SQL);
+
+		if ($MembersList)
+		{
+			return $MembersList;
+		}
+		else
+		{
+			echo "There was an error while retreiving club roster information.";
+			return 0;
+		}
+
+	}
+
+	function GetUserType($CSClubID)
+	{
+		$Database = $this->ReturnDBConnection("RegistrationUser");
+		$SQL = "SELECT AccountType FROM People WHERE People.CSClubID = $CSClubID;";
+
+		$Result = $Database->query($SQL);
+
+		if ($Result)
+		{
+			$User = $Result->fetch_row();
+			$AccountType = $User[0];
+
+			return $AccountType;
+		}
+		else
+		{
+			return 0;
+		}
+	}
 
 	function FindEventsOnDate($DisplayType, $Month, $Day, $Year)
 	{

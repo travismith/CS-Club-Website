@@ -14,6 +14,7 @@
 	{
 		$uploadFile = "../Media/PFPs/$CSClubID";
 		$FileType = $_FILES["PFPFile"]["type"];
+		
 		$Extension = NULL;
 
 		if (file_exists($uploadFile . ".png"))
@@ -51,13 +52,13 @@
 		}
 		else
 		{
+			echo "here";
+			exit();
 			Header('Location: ../Views/Home.php?Selected=MyProfile&Warning=Invalid file');
 			exit();
 		}
 		
 		echo '<pre>';
-
-		
 
 		if (move_uploaded_file($_FILES['PFPFile']['tmp_name'], $uploadFile . $Extension))
 		{
@@ -71,14 +72,12 @@
 		echo 'Here is some more debugging info:';
 		print_r($_FILES);
 		print "</pre>";
-
-		// exit();
-		Header('Location: ../Views/Home.php?Selected=MyProfile');
 	}
+	
+	Header('Location: ../Views/Home.php?Selected=MyProfile');
 ?>
 
-<html>
-	<body>
-		<img src=<?=$PFPFile?>>
-	</body>
-</html>
+<?php
+	
+	
+?>

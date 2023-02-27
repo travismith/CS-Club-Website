@@ -22,6 +22,161 @@ span.Title
 	text-decoration: underline;
 }
 
+/* Member Search */
+
+div.ClubMembers
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	border: 3px solid black;
+	border-radius: 15px;
+	padding: 1rem;
+}
+
+div.MemberSearch
+{
+	display: flex;
+	flex-direction: column;
+}
+
+input.MemberSearch
+{
+	width: 30rem;
+
+	margin-left: 1rem;
+	margin-right: 1rem;
+
+	border-radius: 15px;
+	border: 3px solid black;
+}
+
+select.MemberSearch
+{
+	width: 10rem;
+
+	margin-right: 1rem;
+
+	border-radius: 15px;
+	border: 3px solid black;
+}
+
+button.MemberSearch
+{
+	margin-left: 1rem;
+
+	border-radius: 15px;
+	border: 3px solid black;
+	background-color: red;
+	color: white;
+}
+
+.MemberSearch
+{
+	padding: .25rem;
+}
+
+div.ResultDisplay
+{
+	display: flex;
+	flex-direction: row;
+
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+a.MemberButton:hover
+{
+	color: white;
+	text-decoration: none;
+}
+
+div.ResultContainer
+{
+	border: 2px solid black;
+	border-radius: 15px;
+	background-color: red;
+
+	padding: 1rem;
+	
+	width: 12rem;
+	height: 12rem;
+}
+
+div.ResultSpacer
+{
+	height: 12rem;
+	width: 2rem;
+
+}
+
+span#MemberSearchUsername
+{
+	font-size: 1.75rem;
+	margin-bottom: 1rem;
+}
+
+span#MemberSearchName
+{
+	font-size: 1.25rem;
+	color: white;
+
+	margin-top: .5rem;
+}
+
+span.HighlightUsername
+{
+	font-size: 2rem;
+}
+
+div.ProfileHighlight
+{
+	display: flex;
+	flex-direction: column;
+}
+
+div.ProfileTokenWrapper
+{
+	width: 10vw;
+
+	padding: .5rem;
+}
+
+img.HighlightPFP
+{
+	border: 2px solid black;
+	border-radius: 50%;
+
+	width: 7.5rem;
+	height: 7.5rem;
+}
+
+div.ProfileInformation
+{
+	display: block;
+	justify-content: left;
+	border: 3px solid black;
+	
+	padding: 1rem;
+}
+
+div.Tokens
+{
+	margin-top: 1rem;
+}
+
+span.Token
+{
+	border: 2px solid black;
+	border-radius: 15px;
+	padding: .3rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	background-color: blue
+	
+}
+
 /* Newsletter */
 img.NewsletterHeader
 {
@@ -136,6 +291,8 @@ th.DayLabel
 td
 {
 	border: 3px solid black;
+
+	width: 5rem;
 }
 
 td.White
@@ -152,7 +309,7 @@ td.Grey
 
 td#Selected
 {
-	background-color: greenyellow;
+	background-color: rgb(229, 255, 0);
 }
 
 a.CalendarButton
@@ -171,7 +328,7 @@ a.CalendarButton:hover
 {
 	text-decoration: none;
 
-	background-color: greenyellow;
+	background-color: rgb(229, 255, 0);
 }
 
 div.CalendarDate
@@ -421,8 +578,132 @@ input.FileButton
 	width: 50%;
 }
 
-/* Other */
-img.UnderConstruction
+/* Learn CS */
+div.SelectionTileWrapper
 {
-	width: 50%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+
+
+	height: 55vh;
+	width: 100%;
+}
+
+a.CSTile
+{
+	border: 3px solid black;
+	border-radius: 15px;
+	
+	padding: 1rem;
+
+	font-size: 1.5rem;
+	font-weight: bold;	
+	color: black;
+	text-decoration: none;
+	
+	display: flex;
+	justify-content: space-around;
+}
+
+div.TopicDiv
+{
+	padding: 1rem;
+}
+
+span.TopicTitle
+{
+	font-size: 1.25rem;
+	font-weight: bold;
+}
+
+div.Video
+{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+span.VideoTitle
+{
+	font-size: 1.5rem;
+}
+
+/*Software Development*/
+span.DevTitle
+{
+	font-size: 1.25rem;
+	text-decoration: underline;
+}
+
+div.TileWrapper
+{
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+
+	border: 3px solid black;
+	border-radius: 25px;
+	background-color: red;
+}
+
+a.TopicTile
+{
+	min-width: 25vw;
+	
+
+	margin: 1rem;
+
+	display: flex;
+	flex-direction: column;
+
+	padding: 1rem;
+	
+	border: 3px solid black;
+	border-radius: 25px;
+	background-color: white;
+
+	color: black;
+	font-size: 1.5rem;
+}
+
+a.TopicTile:hover
+{
+	text-decoration: none;
+}
+
+div.TileBody
+{
+	border-top: 3px solid black;
+	padding-top: 1rem;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.Underline
+{
+	text-decoration: underline;
+}
+a.StackTile span
+{
+	font-size: 1rem;
+}
+
+a.StackTile li
+{
+	text-align: center;
+}
+
+/* Other */
+img.UnderConstructionL
+{
+	width: 40%;
+}
+
+img.UnderConstructionS
+{
+	width: 20%;
 }

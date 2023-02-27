@@ -1,0 +1,43 @@
+span.Token#Athlete
+{
+	background-color: red;
+	color: white;
+
+	border: 2px solid black;
+}
+
+.ModelingAndPrinting_Tile
+{
+	background: Red;
+}
+
+.ThreeDPrinting_Tile :hover
+{
+	background-color: linear-gradient(to right, white, red);
+}
+
+.Development_Tile
+{
+	background: rgb(0, 119, 255);
+}
+
+.AI_Tile
+{
+	background: rgb(0, 255, 0);
+}
+
+.Robotics_Tile
+{
+	background: rgb(255, 166, 0);
+}
+
+.CyberSecurity_Tile
+{
+	background: rgb(255, 44, 255);
+}
+
+a.BlueLink
+{
+	color: blue;
+	text-decoration: underline;
+}

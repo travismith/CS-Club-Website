@@ -2,13 +2,13 @@
 		// Homepage displays
 
 		function ContentTitle($Title)
-		{?>
-			<br>
-			<div class="LogoDisplay">
-				<img class="ContentLogo" src="../Media/2022 Logo.png">
+		{
+?>			<br>
+			<!--<div class="LogoDisplay">
+				<img class="ContentLogo" src="../Media/2022 Logo.png">-->
 				<span class="Title"><?=$Title?></span>
-				<img class="ContentLogo" src="../Media/2022 Logo.png">
-			</div>
+				<!--<img class="ContentLogo" src="../Media/2022 Logo.png">
+			</div>-->
 			<br>
 <?php	}
 
@@ -17,8 +17,130 @@
 		function ClubMembers()
 		{
 			$CSDatabase = new CS_Database_Object;
+			$SelectedUsername = filter_input(INPUT_GET, "Username");
+			if ($SelectedUsername == "")
+			{
+				ContentTitle("CS Club Members");
 
-			$MemberArray = $CSDatabase->ClubRoster();
+?>				<div class="ClubMembers">
+					<div class="MemberSearch">
+						<span class="InlineCenter">
+							<select class="MemberSearch">
+								<option selected disabled>Search Filter</option>
+								<option value="Name">Name</option>
+								<option value="Major">Major</option>
+								<option value="Class">Graduating Class</option>
+								<option value="Sport">Sport</option>
+							</select>
+
+							<input type="text" placeholder="Search" name="Search" class="MemberSearch">
+							<button class="MemberSearch" onclick="MemberSearch()">Search</button>
+						</span>
+					</div>
+
+					<script>
+						// Add all the search javascript here
+					</script>
+
+					<br>
+
+<?php				$MemberArray = $CSDatabase->ClubRoster();
+
+?>					<div class="ResultDisplay">
+<?php					if ($MemberArray)
+						{
+							foreach ($MemberArray as $Member)
+							{
+								$Username = $Member["Username"];
+								$CSClubID = $Member["CSClubID"];
+								$Major = $Member["Major"];
+								$FirstName = $Member["FirstName"];
+								$LastName = $Member["LastName"];
+
+?>								<a href="./Home.php?Selected=Members&Username=<?=$Username?>" class="MemberButton">
+									<div class="ResultContainer">
+										<span class="InlineCenter" id="MemberSearchUsername"><?=$Username?></span>
+										<span class="InlineCenter"><img src="../Media/PFPs/<?=$CSClubID?>" onerror="this.src='../Media/PFPs/Default'" class="PFPS"></span>
+										<span class="InlineCenter" id="MemberSearchName"><?=$FirstName . " " . $LastName?></span>
+										
+										<!--<span class="InlineCenter"><?=$Major?></span>-->
+									</div>
+								</a>
+								
+								<div class="ResultSpacer"></div>
+<?php						}
+						}
+?>					</div>
+				</div>
+<?php		}
+			else
+			{
+				$Result = $CSDatabase->SelectUser($SelectedUsername, "Username", "CSClubID, FirstName, LastName, StudentAthlete, Sport, Semester, Major");
+
+				if (!$Result)
+				{
+					Header('Location: ./Home.php?Selected=Members');
+					exit();
+				}
+				else
+				{
+					$CSClubID = $Result[0];
+					$FirstName = $Result[1];
+					$LastName = $Result[2];
+					$StudentAthlete = $Result[3];
+					$Sport = $Result[4];
+					$Semester = $Result[5];
+					$Major = $Result[6];
+?>
+					<div class="ProfileHighlight">
+						<span class="InlineCenter">
+							<div class="ProfileTokenWrapper">
+								<span class="InlineCenter"><span class="HighlightUsername"><?=$SelectedUsername?></span></span>
+								<span class="InlineCenter"><img src="../Media/PFPs/<?=$CSClubID?>" onerror="this.src='../Media/PFPs/Default'" class="HighlightPFP"></span>
+							</div>
+						</span>
+
+						<div class="ProfileInformation">
+							CS Tokens
+							<div class="Tokens">
+<?php							$TokenString = "";
+								$TokenId = "";
+								if ($StudentAthlete)
+								{
+									$TokenString = "Athlete - " . $Sport;
+									$TokenId = "Athlete";
+								}
+
+								/*
+								if ($ADD TOKENS HERE)
+								{
+
+								}
+								*/
+?>
+								<span class="Token" id="<?=$TokenId?>">
+										<?=$TokenString?>
+								</span>
+							</div>
+							<br>
+
+							Name: <?=$FirstName . " " . $LastName?>
+							<br><br>
+							
+							Club Position:
+							<br><br>
+
+							Interests:
+							<br><br><br><br>
+
+							Projects:
+							<br><br>
+
+							<img class="UnderConstructionS" src="../Media/UnderConstruction.png">
+						</div>
+					</div>
+<?php			}
+			}
 		}
 
 		function CalendarDay($MainMonth, $PrintDay, $PrintMonth, $PrintYear)
@@ -65,7 +187,6 @@
 						</div>
 
 						<div class="LowerHalf">
-							
 							<?php
 								$CSDatabase = new CS_Database_Object;
 								$Events = $CSDatabase->FindEventsOnDate("Small", $PrintMonth, $PrintDay, $PrintYear);
@@ -81,7 +202,7 @@
 								}
 								else
 								{?>
-									<span id='SmallEventName'>No events for this date.</span>
+									<span id='SmallEventName'></span>
 						<?php	}?>
 							<br>
 						</div>
@@ -125,8 +246,15 @@
 			$daysOfWeek = Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 			$months = Array("January", "Februrary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 			
+			// Get the current month and year
+			$month = filter_input(INPUT_GET, "Month");
+			$day = filter_input(INPUT_GET, "Day");
+			$year = filter_input(INPUT_GET, "Year");
 
-?>			<div class="Calendar">
+			$CSDatabase = new CS_Database_Object;
+			$CSClubID = $_SESSION["SessionID"];
+?>			
+			<div class="Calendar">
 				<br>
 				<span class="InlineCenter">
 					<div class="CalendarControls">
@@ -134,18 +262,18 @@
 							<div class="DividerButton">
 								<span class="InlineCenter">
 									<a class="MonthMove" href="?Selected=Calendar&
-									<?php
-										$PrevMonth = $month - 1;
-										$PrevYear = $year;
+										<?php
+											$PrevMonth = $month - 1;
+											$PrevYear = $year;
 
-										if ($PrevMonth < 1)
-										{
-											$PrevMonth = $PrevMonth + 12;
-											$PrevYear = $PrevYear - 1;
-										}
+											if ($PrevMonth < 1)
+											{
+												$PrevMonth = $PrevMonth + 12;
+												$PrevYear = $PrevYear - 1;
+											}
 
-										echo "Month=$PrevMonth&Day=1&Year=$PrevYear";
-									?>
+											echo "Month=$PrevMonth&Day=1&Year=$PrevYear";
+										?>
 									">
 										<img src="../Media/CalendarArrowButton.png" class="Rotate180">
 									</a>
@@ -176,7 +304,8 @@
 									$InputMonth = "0" . $InputMonth;
 								}
 							?>
-							<span class="InlineCenter"><input class="MonthMove" type="date" value="<?=$year?>-<?=$InputDay?>-<?=$InputMonth?>"></span>
+							<span class="InlineCenter"><?=$InputMonth?>-<?=$InputDay?>-<?=$year?></span>
+							<!--<span class="InlineCenter"><input class="MonthMove" type="date" value="<?=$year?>-<?=$InputDay?>-<?=$InputMonth?>"></span>-->
 						</div>
 
 						<div class="VerticalCenter">
@@ -207,16 +336,6 @@
 				<br>
 				<br>
 				<div class="CalendarDisplaySpace">
-					<?php
-						// Get the current month and year
-						$month = filter_input(INPUT_GET, "Month");
-						$day = filter_input(INPUT_GET, "Day");
-						$year = filter_input(INPUT_GET, "Year");
-
-						$CSDatabase = new CS_Database_Object;
-						$CSClubID = $_SESSION["SessionID"];
-					?>
-					
 					<br>
 					<div class="Events">
 						<?php
@@ -310,8 +429,25 @@
 					?>
 				</table>
 
+				<?php
+					$UserType = $CSDatabase->GetUserType($CSClubID);
+					$EventLead = false;
+
+					if ($UserType > 40)
+					{
+						$EventLead = true;
+					}
+				?>
+
 				<br>
-				<div class="CalendarDisplaySpace" id="CreateEvent">
+				<div class="CalendarDisplaySpace" id="CreateEvent"
+					<?php
+						if (!$EventLead)
+						{
+							echo "style='display: none;'";
+						}
+					?>
+				>
 					<span class="DisplayHeader">Create an Event</span>
 
 					<span class="InlineCenter">
@@ -567,9 +703,85 @@
 			<br>
 
 			<span class="InlineCenter">
-				<img class="UnderConstruction" src="../Media/UnderConstruction.png">
+				<img class="UnderConstructionL" src="../Media/UnderConstruction.png">
 			</span>
 <?php	}
+
+		function LearnCS()
+		{
+			$Interest = filter_input(INPUT_GET, "Interest");
+
+			if ($Interest == "")
+			{
+				ContentTitle("Learn CS");
+
+	?>			<div class="SelectionTileWrapper">
+					<a href="?Selected=Learn&Interest=Modeling and Printing" class="CSTile Orbitron ModelingAndPrinting_Tile">
+						Computer Modeling and 3D Printing
+					</a>
+
+					<a href="?Selected=Learn&Interest=Software Development" class="CSTile Orbitron Development_Tile">
+						Software Development
+					</a>
+
+					<a href="?Selected=Learn&Interest=Artifical Intelligence" class="CSTile Orbitron AI_Tile">
+						Artificial Intelligence - Deep Learning
+					</a>
+
+					<a href="?Selected=Learn&Interest=Robotics" class="CSTile Orbitron Robotics_Tile">
+						Robotics
+					</a>
+
+					<a href="?Selected=Learn&Interest=Cyber Security" class="CSTile Orbitron CyberSecurity_Tile">
+						Cyber Security
+					</a>
+				</div>
+<?php		}
+			else
+			{
+?>				<div class="TopicDiv">
+					<span class="InlineCenter TopicTitle">
+						<?php
+							if ($Interest == "Modeling and Printing")
+							{
+								ContentTitle("Computer Modeling and 3D Printing");
+							}
+							else
+							{
+								ContentTitle($Interest);
+							}
+						?>
+					</span>
+				</div>
+
+				<br>
+
+				<div class="TopicDiv">
+<?php				include 'LearningResources.php';
+
+					if ($Interest == "Modeling and Printing")
+					{
+						ModelingAndPrinting();
+					}
+					else if ($Interest == "Software Development")
+					{
+						SoftwareDevelopment();
+					}
+					else if ($Interest == "Artificial Intelligence")
+					{
+						UnderConstruction("Artificial Intelligence");
+					}
+					else if ($Interest == "Robotics")
+					{
+						UnderConstruction("Robotics");
+					}
+					else if ($Interest == "Cyber Security")
+					{
+						UnderConstruction("Cyber Security");
+					}
+?>				</div>
+<?php		}
+		}
 
 		function ProfileEditForm($CSDatabase, $CSClubID)
 		{
@@ -585,6 +797,10 @@
 			$Semester = $UserInfo[4];
 			$Major = $UserInfo[5];
 
+			if ($Phone == "NULL")
+			{
+				$Phone = "";
+			}
 			if ($Sport == "NULL")
 			{
 				$Sport = "";
@@ -702,8 +918,12 @@
 						</form>
 
 						<script>
+							
 							document.getElementById('FileInput').onchange = function (evt)
 							{
+								document.getElementById("FileSubmit").click();
+								console.log("Here");
+								/*
 								var tgt = evt.target || window.event.srcElement,
 									files = tgt.files;
 								
@@ -726,6 +946,7 @@
 									// fallback -- perhaps submit the input to an iframe and temporarily store
 									// them on the server until the user's session ends.
 								}
+								*/
 							}
 						</script>
 					</div>
