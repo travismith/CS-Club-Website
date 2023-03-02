@@ -6,15 +6,17 @@ span.Token#Athlete
 	border: 2px solid black;
 }
 
-.ModelingAndPrinting_Tile
+.CADAnd3DPrinting_Tile
 {
 	background: Red;
 }
 
-.ThreeDPrinting_Tile :hover
+/* DOESN'T WORK 
+.CADAnd3DPrinting_Tile:hover
 {
 	background-color: linear-gradient(to right, white, red);
 }
+*/
 
 .Development_Tile
 {
@@ -36,8 +38,43 @@ span.Token#Athlete
 	background: rgb(255, 44, 255);
 }
 
+.YellowBorder
+{
+	border: 2px solid green;
+}
+
+.SystemAdmin_Tile
+{
+	background: yellow;
+}
+
+.Networking_Tile
+{
+	background: #ffd2d9;
+}
+
+.DataScience_Tile
+{
+	background: #00e5ff;
+}
+
 a.BlueLink
 {
 	color: blue;
 	text-decoration: underline;
+}
+
+span.Red
+{
+	color: Red;
+}
+
+span.Green
+{
+	color: Green;
+}
+
+span.Blue
+{
+	color: Blue;
 }

@@ -4,12 +4,13 @@
 		function ContentTitle($Title)
 		{
 ?>			<br>
-			<!--<div class="LogoDisplay">
+			<!--
+			<div class="LogoDisplay">
 				<img class="ContentLogo" src="../Media/2022 Logo.png">-->
 				<span class="Title"><?=$Title?></span>
 				<!--<img class="ContentLogo" src="../Media/2022 Logo.png">
-			</div>-->
-			<br>
+			</div>
+			-->
 <?php	}
 
 		include 'Modulation/Newsletter.php';
@@ -213,7 +214,7 @@
 
 		function ClubCalendar()
 		{
-			ContentTitle("2022-2023 Club Calendar");
+			//ContentTitle("2022-2023 Club Calendar");
 
 			date_default_timezone_set('America/Chicago');
 
@@ -710,21 +711,23 @@
 		function LearnCS()
 		{
 			$Interest = filter_input(INPUT_GET, "Interest");
-
+			$Tutorial = filter_input(INPUT_GET, "Tutorial");
+			
 			if ($Interest == "")
 			{
 				ContentTitle("Learn CS");
 
 	?>			<div class="SelectionTileWrapper">
-					<a href="?Selected=Learn&Interest=Modeling and Printing" class="CSTile Orbitron ModelingAndPrinting_Tile">
-						Computer Modeling and 3D Printing
+					<a href="?Selected=Learn&Interest=CAD and 3D Printing" class="CSTile Orbitron CADAnd3DPrinting_Tile">
+						CAD and 3D Printing
 					</a>
 
 					<a href="?Selected=Learn&Interest=Software Development" class="CSTile Orbitron Development_Tile">
 						Software Development
 					</a>
 
-					<a href="?Selected=Learn&Interest=Artifical Intelligence" class="CSTile Orbitron AI_Tile">
+					<!--<a href="?Selected=Learn&Interest=Artifical-->
+					<a href="https://ai.com" Intelligence class="CSTile Orbitron AI_Tile">
 						Artificial Intelligence - Deep Learning
 					</a>
 
@@ -735,13 +738,27 @@
 					<a href="?Selected=Learn&Interest=Cyber Security" class="CSTile Orbitron CyberSecurity_Tile">
 						Cyber Security
 					</a>
+
+					<a href="?Selected=Learn&Interest=System Administration" class="CSTile Orbitron SystemAdmin_Tile">
+						System Administration
+					</a>
+
+					<a href="?Selected=Learn&Interest=Networking" class="CSTile Orbitron Networking_Tile">
+						Networking
+					</a>
+
+					<a href="?Selected=Learn&Interest=Data Science" class="CSTile Orbitron DataScience_Tile">
+						Data Science
+					</a>
 				</div>
 <?php		}
 			else
 			{
-?>				<div class="TopicDiv">
+?>				<!--
+				<div class="TopicDiv">
 					<span class="InlineCenter TopicTitle">
 						<?php
+						/*
 							if ($Interest == "Modeling and Printing")
 							{
 								ContentTitle("Computer Modeling and 3D Printing");
@@ -750,34 +767,85 @@
 							{
 								ContentTitle($Interest);
 							}
+						*/
 						?>
 					</span>
-				</div>
-
-				<br>
+				</div>	
+				-->
 
 				<div class="TopicDiv">
 <?php				include 'LearningResources.php';
 
-					if ($Interest == "Modeling and Printing")
+					if ($Interest == "CAD and 3D Printing")
 					{
-						ModelingAndPrinting();
+						if ($Tutorial == "")
+						{
+							CADAnd3DPrinting();
+						}
+						else if ($Tutorial == "Fusion360")
+						{
+							Fusion360();
+						}
 					}
 					else if ($Interest == "Software Development")
 					{
-						SoftwareDevelopment();
+						if ($Tutorial == "")
+						{
+							SoftwareDevelopment();
+						}
+						else if ($Tutorial == "CPP")
+						{
+							CPP();
+						}
+						else if ($Tutorial == "PHP")
+						{
+							PHP();
+						}
+						else if ($Tutorial == "Java")
+						{
+							Java();
+						}
+						else if ($Tutorial == "Python")
+						{
+							Python();
+						}
+						else if ($Tutorial == "Lua")
+						{
+							Lua();
+						}
+						else if ($Tutorial == "JS")
+						{
+							Javascript();
+						}
+						else if ($Tutorial == "CSharp")
+						{
+							CSharp();
+						}
 					}
 					else if ($Interest == "Artificial Intelligence")
 					{
-						UnderConstruction("Artificial Intelligence");
+						AI();
+						
 					}
 					else if ($Interest == "Robotics")
 					{
-						UnderConstruction("Robotics");
+						Robotics();
 					}
 					else if ($Interest == "Cyber Security")
 					{
-						UnderConstruction("Cyber Security");
+						CyberSecurity();
+					}
+					else if ($Interest == "System Administration")
+					{
+						SystemAdministration();
+					}
+					else if ($Interest == "Networking")
+					{
+						Networking();
+					}
+					else if ($Interest == "Data Science")
+					{
+						DataScience();
 					}
 ?>				</div>
 <?php		}

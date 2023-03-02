@@ -178,12 +178,41 @@ span.Token
 }
 
 /* Newsletter */
+div.NewsletterFrame
+{
+	display: flex;
+	justify-content: center;
+
+	margin-top: 1rem;
+}
+
+div.Newsletter
+{
+	width: 60vw;
+	padding: 1rem;
+	padding-top: 0;
+	border: 2px solid black;
+	
+}
+
 img.NewsletterHeader
 {
 	width: 60%;
 	margin: auto;
 
 	border: 3px solid black;
+}
+
+div.Newsletter li.Tab
+{
+	margin-left: 2rem;
+}
+
+a.NewsletterLink
+{
+	color: black;
+	font-size: 1rem;
+	text-decoration: underline;
 }
 
 div.SelectionContent h2.Newsletter
@@ -213,7 +242,7 @@ a.BodyLink
 div.Calendar
 {
 	width: 100%;
-
+	
 	color: white;
 	text-align: center;
 	border-radius: 25px;
@@ -581,13 +610,13 @@ input.FileButton
 /* Learn CS */
 div.SelectionTileWrapper
 {
+	margin-top: 3rem;
 	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
+	flex-direction: row;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
 
-
-	height: 55vh;
-	width: 100%;
+	height: 60vh;
 }
 
 a.CSTile
@@ -597,13 +626,18 @@ a.CSTile
 	
 	padding: 1rem;
 
-	font-size: 1.5rem;
-	font-weight: bold;	
 	color: black;
+	font-size: 1.5rem;
+	font-weight: bold;
 	text-decoration: none;
 	
 	display: flex;
 	justify-content: space-around;
+	align-items: center;
+	text-align: center;
+	
+	width: 15vw;
+	height: 10vw;
 }
 
 div.TopicDiv
@@ -646,7 +680,7 @@ div.TileWrapper
 
 	border: 3px solid black;
 	border-radius: 25px;
-	background-color: red;
+	background-color: rgb(200,0,0);
 }
 
 .TopicTile
@@ -669,11 +703,10 @@ div.TileWrapper
 	font-size: 1.5rem;
 }
 
-
-
 a.TopicTile:hover
 {
 	text-decoration: none;
+	color: black;
 }
 
 div.TileBody
@@ -685,10 +718,33 @@ div.TileBody
 	flex-direction: column;
 }
 
+div.TileBody hr
+{
+	height: .5vh;
+	background-color: black;
+}
+
+div.Indented
+{
+	padding-left: 2rem;
+}
+
 .Underline
 {
 	text-decoration: underline;
 }
+
+a.Tutorial
+{
+	color: black;
+}
+
+a.StartHere
+{
+	background-color: yellow;
+	border-radius: 15px;
+}
+
 a.StackTile span
 {
 	font-size: 1rem;
@@ -697,6 +753,49 @@ a.StackTile span
 a.StackTile li
 {
 	text-align: center;
+}
+
+div.TutorialWrapper
+{
+	margin-top: -1rem;
+}
+
+div.TutorialLower
+{
+	display: flex;
+	flex-direction: row;
+}
+
+span.TutorialTitle
+{
+	font-size: 1.5rem;
+}
+
+div.TutorialLessonNav
+{
+	display: flex;
+	flex-direction: column;
+
+	border: 2px solid black;
+	
+	padding: 1rem;
+	
+	width: 30%;
+}
+
+div.LessonContent
+{
+	margin-left: 1rem;
+	padding: 1rem;
+	border: 2px solid black;
+
+	width: 70%;
+
+}
+
+a.TutorialLesson
+{
+	color: black;
 }
 
 /* Other */

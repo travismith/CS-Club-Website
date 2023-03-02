@@ -14,30 +14,38 @@ div
 div.OutterWrapper
 {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 
 	max-width: 100vw;
-	min-height: calc(90vh - 5px);
+	min-height: 10vh;
 }
 
-div.InnerWrapper
+div.Right
 {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+
+	width: 100vw;
+	min-height: 100vh;
 }
 
 /* Navigation Bar */
+div.Fixed
+{
+	display: fixed;
+	top: 0;
+}
+
 div.NavBar
 {
 	display: flex;
 	justify-content: left;
 
 	padding: 1rem;
-
 	min-height: 10vh;
+	border-bottom: 5px solid black;
 
 	background-color: rgb(200,0,0);
-	border-bottom: 5px solid black;
 }
 
 div.ActionBar
@@ -91,23 +99,36 @@ span.NotifCount
 
 img.Notifications
 {
-	width: 2.25vw;
-	height: 2.25vw;
+	width: 4vh;
+	height: 4vh;
 }
 
 img.PFPS
 {
-	width: 4vw;
-	height: 4vw;
+	width: 3rem;
+	height: 3rem;
 
 	border: 3px solid black;
 	border-radius: 50%;
 }
 
+button.MenuToggle
+{
+	border-radius: 50%;
+
+	background-color: rgb(200, 0, 0);
+}
+
+button.MenuToggle:hover
+{
+	background-color: rgb(150, 0, 0) !important;
+	border: 2px solid black;
+}
+
 img.MenuToggle
 {
-	width: 3vw;
-	height: 3vw;
+	height: 2.25rem;
+	width: 2.25rem;
 }
 
 /* Menu */
@@ -119,7 +140,6 @@ div.Menu
 	background-color: rgb(200,0,0);
 	
 	color: white;
-	border-right: 5px solid black;
 
 	display: none;
 	flex-direction: column;
@@ -129,6 +149,18 @@ div.MenuContent
 {
 	display: flex;
 	flex-direction: column;
+}
+
+span.MenuTitle
+{
+	font-size: 2rem;
+	color: white;
+
+	padding: 1rem;
+	height: 10vh;
+	border-bottom: 5px solid white;
+
+	margin-bottom: 1rem;
 }
 
 div.UserInfo
@@ -144,8 +176,8 @@ div.UserInfo
 
 img.PFPL
 {
-	width: 7.5rem;
-	height: 7.5rem;
+	width: 15vh;
+	height: 15vh;
 
 	border: 3px solid black;
 	border-radius: 50%;
@@ -178,6 +210,7 @@ div.MenuSection
 
 	background-color: rgb(135,0,0);
 	color: black;
+
 	border-radius: 5px;
 
 	padding: .75rem;
@@ -191,6 +224,19 @@ span.MenuLabel
 	justify-content: space-between;
 
 	color: white;
+}
+
+button.HoverTextButton
+{
+	background-color: transparent;
+	border: 0;
+	color: white;
+	font-size: 1rem;
+}
+
+button.HoverTextButton:hover
+{
+	cursor: pointer;
 }
 
 button.SectionMover
@@ -241,8 +287,6 @@ a:hover
 
 div.SelectionContent
 {
-	width: 100vw;
-	
 	color: black;
 
 	/*background-color: rgb(135,0,0);*/
