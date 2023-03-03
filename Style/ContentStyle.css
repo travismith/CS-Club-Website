@@ -664,9 +664,24 @@ span.VideoTitle
 }
 
 /*Software Development*/
-span.DevTitle
+button.DevTitle
 {
+	padding: 1rem;
+
+	margin-bottom: 1rem;
+	display: flex;
+	justify-content: center;
+
+	color: white;
 	font-size: 1.25rem;
+	width: 100%;
+
+	border: 2px solid black;
+	background-color: rgb(200,0,0);
+}
+
+button.DevTitle:hover
+{
 	text-decoration: underline;
 }
 
@@ -674,12 +689,13 @@ div.TileWrapper
 {
 	margin-top: 1rem;
 	margin-bottom: 2rem;
-	display: flex;
+
+	display: none;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
 
 	border: 3px solid black;
-	border-radius: 25px;
+	
 	background-color: rgb(200,0,0);
 }
 
@@ -718,6 +734,35 @@ div.TileBody
 	flex-direction: column;
 }
 
+div.TileBodyRow
+{
+	border-top: 3px solid black;
+	padding-top: 1rem;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+div.TileBodyRow div
+{
+	display: flex;
+	flex-direction: column;
+}
+
+span.ColumnTitle
+{
+	font-size: 1.5rem;
+	text-decoration: underline;
+
+	margin-bottom: .5rem;
+}
+
+ul.JSFrameworks
+{
+	margin-top: 0;
+}
+
 div.TileBody hr
 {
 	height: .5vh;
@@ -727,6 +772,8 @@ div.TileBody hr
 div.Indented
 {
 	padding-left: 2rem;
+	display: flex;
+	flex-direction: column;
 }
 
 .Underline
@@ -796,6 +843,19 @@ div.LessonContent
 a.TutorialLesson
 {
 	color: black;
+	
+	display: flex;
+	flex-direction: column;
+
+	border-top: 2px solid grey;
+	
+	padding-top: .5rem;
+	padding-bottom: .5rem;
+}
+
+a.FinalTutorialLesson
+{
+	border-bottom: 2px solid grey;
 }
 
 /* Other */
