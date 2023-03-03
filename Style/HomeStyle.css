@@ -76,7 +76,132 @@ div.ActionBarTab
 	margin-right: 1rem;
 }
 
-button.Notifications
+div.ProfileActionTab
+{
+	display: flex;
+	flex-direction: column;
+}
+
+button.ProfileButton
+{
+	background-color: transparent;
+	border: 0;
+}
+
+div.ProfileActionTab_Top
+{
+	display: flex;
+	flex-direction: row;
+}
+
+div.ProfileActionTab_Bottom
+{
+	display: block;
+}
+
+div.ProfileMenu
+{
+	display: none;
+	flex-direction: column;
+
+	position: absolute;
+	right: 10vw;
+
+	max-width: 20vw;
+	display: flex;
+
+	padding: 1rem;
+	padding-top: .5rem;
+
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 15px;
+}
+
+div.ProfileMenuTitle
+{
+	margin-bottom: .5rem;
+}
+
+div.ProfileMenuBottom
+{
+	display: flex;
+	flex-direction: column;
+}
+
+div.ProfileMenu a
+{
+	color: black;
+}
+
+div.ProfileMenu a:hover
+{
+	text-decoration: underline;
+}
+
+div.ProfileMenu hr
+{
+	margin-top: .5rem;
+	margin-bottom: .5rem;
+}
+
+div.NotificationDisplay
+{
+	border: 2px solid grey;
+	
+
+	height: 15vh;
+
+	overflow-y: scroll;
+}
+
+.NotificationDisplay::-webkit-scrollbar {
+  width: 20px;
+}
+
+.NotificationDisplay::-webkit-scrollbar-thumb {
+  background-color: #FF0000;
+  border-radius: 15px;
+}
+
+.NotificationDisplay::-webkit-scrollbar-track {
+	
+	background-color: white;
+}
+
+div.Notification
+{
+	display: flex;
+	flex-direction: row;
+
+	border-bottom: 2px solid grey;
+	border-right: 2px solid grey;
+}
+
+div.NotificationIconWrapper
+{
+	width: 25%;
+	display: flex;
+
+	border-right: 1px solid grey;
+
+	padding: .5rem;
+}
+
+img.NotificationIcon
+{
+	max-width: 100%;
+	max-height: 100%;
+}
+
+div.NotificationContent
+{
+	padding: 1rem;
+
+	width: 75%;
+}
+
+button.NotificationsButton
 {
 	height: 50%;
 	width: 2vw;
@@ -158,9 +283,7 @@ span.MenuTitle
 
 	padding: 1rem;
 	height: 10vh;
-	border-bottom: 5px solid white;
-
-	margin-bottom: 1rem;
+	margin-top: 2rem;
 }
 
 div.UserInfo

@@ -383,29 +383,132 @@
 						</div>
 
 						<div class="ActionBarTab">
-							<img class="PFPS" src="<?=$ImageSrc?>" onerror="this.src='../Media/PFPs/Default'">
-							
-							<button class="Notifications">
-								<img src="../Media/Notifications.png" class="Notifications">
+							<div class="ProfileActionTab">
+								<div class="ProfileActionTab_Top">
+									<button onClick="ProfileButton()" class="ProfileButton">
+										<img class="PFPS" src="<?=$ImageSrc?>" onerror="this.src='../Media/PFPs/Default'">
+									</button>
+									
+									<button onClick="NotificationsButton()" class="NotificationsButton">
+										<img src="../Media/Notifications.png" class="Notifications">
 
-								<span class="NotifCount Roboto">
-									<?php
-										// Notifications
-										echo "0";
-									?>
-								</span>
-							</button>
-						</div>
+										<span class="NotifCount Roboto">
+											<?php
+												// Notifications
+												echo "0";
+											?>
+										</span>
+									</button>
+								</div>
 
-						<!--
-						<div class="ActionBarTab">
-							<button onClick="" class="ActionButton">
-								<span class="InlineCenter">
-									<img src="../Media/Notifications.png" class="Notifications">
-								</span>
-							</button>
+								<div class="ProfileActionTab_Bottom">
+									<div class="ProfileMenu">
+										<div class="ProfileMenuTitle">
+											<span class="Roboto InlineCenter">Profile</span>
+										</div>
+
+										<hr>
+
+										<div class="ProfileMenuBottom">
+											<a href="?Selected=MyProfile" class="Roboto">My Profile</a>
+											<a href="../Objects/Logout.php" class="Roboto">Logout</a>
+										</div>
+
+										<hr>
+
+										<div class="ProfileMenuTitle">
+											<span class="Roboto InlineCenter">Notifications</span>
+										</div>
+
+										<div class="NotificationDisplay">
+										
+											<?php
+											
+											function Notification($Type, $Content)
+											{
+											
+											?>
+
+												<div class="Notification">
+													<div class="NotificationIconWrapper">
+														<img class="NotificationIcon" src="../Media/NotificationIcons/<?=$Type?>.jpg" />
+													</div>
+
+													<div class="NotificationContent">
+														<?=$Content?>
+													</div>
+												</div>
+													
+											<?php
+											
+											}
+											
+											/*
+												DisplayNotifications()
+												// Probably already loaded on notification count...
+												// Need to add notifications to the database, I should probably draw a database schema for this.
+											*/
+
+											for ($x = 0; $x < 10; $x++)
+											{
+												Notification("Example", "ExampleNotification");
+											}
+											?>
+
+											<div class="Notification">
+												<div class="NotificationIconWrapper">
+													<img class="NotificationIcon" src="../Media/NotificationIcons/Example.jpg" />
+												</div>
+
+												<div class="NotificationContent">
+													Example Notification
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<script>
+									const profileMenu = document.querySelector('div.ProfileMenu')
+									const div = document.querySelector('div.ProfileActionTab_Bottom');
+									div.style.display = "none";
+
+									var Toggle = true;
+
+									function Close()
+									{
+										console.log("Closing");
+
+										profileMenu.style.display = "none";
+										profileWrapper.style.dislay = "none";
+									}
+
+									function Open()
+									{
+										console.log("Open");
+
+										profileMenu.style.display = "flex";
+										profileWrapper.style.dislay = "block";
+									}
+
+									function ProfileButton()
+									{
+										if (div.style.display === "none") {
+											div.style.display = "block";
+										}
+										else
+										{
+											div.style.display = "none";
+										}
+									}
+									
+									function NotificationsButton()
+									{
+
+									}
+								</script>
+							</div>
 						</div>
-						-->
 					</div>
 				</div>
 
@@ -414,7 +517,7 @@
 					<?php
 						if ($Selected == NULL || $Selected == "Newsletter")
 						{
-							ClubNewsletter();
+							UpdatedNewsletter("March23");
 						}
 						else if ($Selected == "Under Construction")
 						{

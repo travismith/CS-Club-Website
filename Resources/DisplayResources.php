@@ -1,19 +1,30 @@
 <?php
-		// Homepage displays
 
-		function ContentTitle($Title)
-		{
-?>			<br>
-			<!--
-			<div class="LogoDisplay">
-				<img class="ContentLogo" src="../Media/2022 Logo.png">-->
-				<span class="Title"><?=$Title?></span>
-				<!--<img class="ContentLogo" src="../Media/2022 Logo.png">
+// Homepage displays
+function ContentTitle($Title)
+{
+?>
+	<br>
+	<!--
+		<div class="LogoDisplay">
+		<img class="ContentLogo" src="../Media/2022 Logo.png">-->
+		<span class="Title"><?=$Title?></span>
+		<!--
+			<img class="ContentLogo" src="../Media/2022 Logo.png">
 			</div>
-			-->
-<?php	}
+		-/->
+	-->
+	
+<?php
+}
 
-		include 'Modulation/Newsletter.php';
+function UpdatedNewsletter($Month)
+{
+	$MonthsNewsletter = "Modulation/Newsletters/$Month.php";
+	include $MonthsNewsletter;
+
+	Newsletter();
+}
 
 		function ClubMembers()
 		{
@@ -793,9 +804,35 @@
 						{
 							SoftwareDevelopment();
 						}
+						else
+						{
+							$TutorialFile = "../Resources/Modulation/Tutorials/" . $Tutorial . ".php";
+							try
+							{
+								if (file_exists($TutorialFile))
+								{
+									include $TutorialFile;
+									Tutorial();
+								}
+								else
+								{
+									echo "This tutorial is not ready yet!";
+								}
+							}
+							catch(Exception $Error)
+							{
+								UnderConstruction();
+							}
+							//Tutorial();
+						}
+						/*
 						else if ($Tutorial == "CPP")
 						{
 							CPP();
+						}
+						else if ($Tutorial == "Python")
+						{
+							Python();
 						}
 						else if ($Tutorial == "PHP")
 						{
@@ -805,10 +842,6 @@
 						{
 							Java();
 						}
-						else if ($Tutorial == "Python")
-						{
-							Python();
-						}
 						else if ($Tutorial == "Lua")
 						{
 							Lua();
@@ -817,10 +850,7 @@
 						{
 							Javascript();
 						}
-						else if ($Tutorial == "CSharp")
-						{
-							CSharp();
-						}
+						*/
 					}
 					else if ($Interest == "Artificial Intelligence")
 					{
