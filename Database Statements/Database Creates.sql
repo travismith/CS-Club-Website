@@ -1,17 +1,5 @@
 CREATE DATABASE MSUCSClub;
 
-CREATE TABLE `Project`
-{
-	DirectorClubID int NOT NULL,
-}
-
-CREATE TABLE CSTopic
-{
-	TopicName varchar(50) NOT NULL,
-	DirectorID int NOT NULL,
-	FOREIGN KEY (DirectorID) REFERENCES People (CSClubID),
-}
-
 CREATE TABLE `People`
 (
 	Username varchar(30) NOT NULL,
@@ -53,6 +41,46 @@ CREATE TABLE `People`
 	Major varchar(100)
 );
 
+CREATE TABLE `Notification`
+(
+	NotificationID int NOT NULL AUTO_INCREMENT,
+	Receiver_CSClubID int NOT NULL,
+
+	NotificationType varchar(50) NOT NULL,
+	NotificationName varchar(50) NOT NULL,
+	NotificationDate datetime NOT NULL,
+	NotificationContent varchar(255) NOT NULL,
+
+	PRIMARY KEY (ID),
+	FOREIGN KEY (Receiver_CSClubID) REFERENCES People (CSClubID)
+);
+
+CREATE TABLE `Posts`
+(
+	PostID int NOT NULL AUTO_INCREMENT,
+	Poster_CSClubID int NOT NULL,
+
+	PostTitle varchar(50) NOT NULL,
+	PostContent varchar NOT NULL,
+
+	PostData_ID int NOT NULL,
+
+	PRIMARY KEY (PostID),
+
+	FOREIGN KEY (Poster_CSClubID) REFERENCES `PEOPLE` (CSClubID),
+	FOREIGN KEY (PostData_ID) REFERENCES `PostData`
+);
+
+CREATE TABLE PostData
+(
+	PostData_ID int NOT NULL,
+	Post_ID int NOT NULL,
+
+	PRIMARY KEY (PostData_ID),
+	
+	FOREIGN KEY (Post_ID) REFERENCES Posts (PostData_ID)
+);
+
 CREATE TABLE `Events`
 (
 	EventID int NOT NULL AUTO_INCREMENT,
@@ -60,7 +88,7 @@ CREATE TABLE `Events`
 
 	`Name` varchar(100) NOT NULL,
 	`Location` varchar(50) NOT NULL,
-	`Description` TEXT,
+	`Description` varchar NOT NULL,
 
 	/*
 		Recurring
@@ -92,6 +120,20 @@ CREATE TABLE `Events`
 	PRIMARY KEY (EventID),
 	FOREIGN KEY (DirectorClubID) REFERENCES People (CSClubID)
 );
+
+/* New 
+CREATE TABLE `Project`
+{
+	DirectorClubID int NOT NULL,
+}
+
+CREATE TABLE CSTopic
+{
+	TopicName varchar(50) NOT NULL,
+	DirectorID int NOT NULL,
+	FOREIGN KEY (DirectorID) REFERENCES People (CSClubID),
+}
+*/
 
 /* 1 */
 INSERT INTO `Events`
